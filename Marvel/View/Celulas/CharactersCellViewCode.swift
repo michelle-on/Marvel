@@ -48,46 +48,27 @@ class CharactersCellViewCode: UITableViewCell {
         NSLayoutConstraint.activate([
             
             self.backgroundViewCell.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: 10),
-            self.backgroundViewCell.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: 10),
-            self.backgroundViewCell.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant: 10),
-            self.backgroundViewCell.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor, constant: 10),
+            self.backgroundViewCell.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor),
+            self.backgroundViewCell.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor),
+            self.backgroundViewCell.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor, constant: -5),
             
-            self.characterImage.topAnchor.constraint(equalTo: self.backgroundViewCell.topAnchor),
-            self.characterImage.leadingAnchor.constraint(equalTo: self.backgroundViewCell.leadingAnchor, constant: -15),
-            self.characterImage.trailingAnchor.constraint(equalTo: self.nameLabel.leadingAnchor, constant: -15),
+            self.characterImage.topAnchor.constraint(equalTo: self.backgroundViewCell.topAnchor, constant: -5),
+            self.characterImage.heightAnchor.constraint(equalToConstant: 100),
+            self.characterImage.widthAnchor.constraint(equalToConstant: 100),
+            self.characterImage.leadingAnchor.constraint(equalTo: self.backgroundViewCell.leadingAnchor),
             self.characterImage.bottomAnchor.constraint(equalTo: self.backgroundViewCell.bottomAnchor),
             
             self.nameLabel.topAnchor.constraint(equalTo: self.characterImage.topAnchor),
+            self.nameLabel.leadingAnchor.constraint(equalTo: self.characterImage.trailingAnchor, constant: 5),
             self.nameLabel.trailingAnchor.constraint(equalTo: self.backgroundViewCell.trailingAnchor)
         ])
     }
     
-//    func load(url: URL) {
-//        DispatchQueue.global().async {
-//            [weak self] in
-//            if let data = try? Data(contentsOf: url) {
-//                if let image = UIImage(data: data) {
-//                    self?.characterImage = UIImageView(image: image)
-//                }
-//            }
-//        }
-//    }
-    
     func configcell (_ character: Character) {
         nameLabel.text = character.name
-//        self.characterImage.image = UIImage(named: "spider-man")
-
-//        guard let path = character.thumbnail?.path else {return}
-//
-//        guard let url = URL(string: path) else {return}
-//
-//        URLSession.shared.dataTask(with: url) {data, response, error in
-//            guard let data = data, error == nil else {return}
-//
-//            DispatchQueue.main.async {
-//                print("image set")
-//                self.characterImage.image = UIImage(data: data)
-//            }
+        self.characterImage.image = UIImage(named: "Image-2")
+        
+        //baixar a imagem (urlsession), converter o data para imagem (conversor data para uiimage)
     }
 }
 
