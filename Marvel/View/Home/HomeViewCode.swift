@@ -34,7 +34,6 @@ class HomeViewCode: UIView {
         self.tableViewView.translatesAutoresizingMaskIntoConstraints = false
         self.translatesAutoresizingMaskIntoConstraints = false
 
-        self.tableViewView.backgroundColor = UIColor.black
     }
     
     func configConstraints() {
