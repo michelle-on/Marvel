@@ -95,7 +95,7 @@ class ViewController: UIViewController {
     }
 }
 
-extension ViewController: UITableViewDataSource {
+extension ViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return charactersList.count
     }
@@ -110,10 +110,23 @@ extension ViewController: UITableViewDataSource {
         cellCharacter.configcell(charactersList[indexPath.row])
         return cellCharacter
     }
-}
-
-extension ViewController: UITableViewDelegate {
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let detailsController = DetailsViewController()
+        
+        guard let navigation = self.navigationController else {
+            print("nao foi possivel encontrar o navigation")
+            return
+        }
+        
+        navigation.pushViewController(detailsController, animated: true)
+    }
+    
+    func presentNavigationController() {
+        let navigation = UINavigationController(rootViewController: self)
+        
+        
+    }
 }
 
 
