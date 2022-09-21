@@ -33,7 +33,7 @@ class CharactersCellViewCode: UITableViewCell {
         self.backgroundViewCell.addSubview(nameLabel)
         
         self.backgroundViewCell.backgroundColor = UIColor.white
-        self.characterImage.backgroundColor = UIColor.gray
+        self.characterImage.backgroundColor = UIColor.green
         
         self.backgroundViewCell.translatesAutoresizingMaskIntoConstraints = false
         self.characterImage.translatesAutoresizingMaskIntoConstraints = false
@@ -66,9 +66,36 @@ class CharactersCellViewCode: UITableViewCell {
     
     func configcell (_ character: Character) {
         nameLabel.text = character.name
-        self.characterImage.image = UIImage(named: "Image-2")
         
-        //baixar a imagem (urlsession), converter o data para imagem (conversor data para uiimage)
+        guard let `extension` = character.thumbnail?.extension else {return}
+        guard var path = character.thumbnail?.path else {return}
+        path += ".\(`extension`)"
+        guard let urlPath = URL(string: path) else {return}
+        
+        getImageCharacter(urlPath)
+    }
+    
+    func getImageCharacter(_ path: URL) {
+        URLSession.shared.dataTask(with: path ) { data, response, erro in
+            guard
+                let data = data else {return}
+            
+            do {
+                 try data.write(to: self.getDocumentsDirectory().appendingPathComponent("image.jpg"))
+                
+                DispatchQueue.main.async {
+                    self.characterImage.image = UIImage(data: data)
+                }
+            } catch {
+                print("Erro\(String(describing: erro))")
+            }
+
+        }.resume()
+    }
+    
+    private func getDocumentsDirectory() -> URL {
+        let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
+        return paths[0]
     }
 }
 
