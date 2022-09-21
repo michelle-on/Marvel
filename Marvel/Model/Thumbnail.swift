@@ -9,8 +9,10 @@ import Foundation
 
 struct Thumbnail: Codable {
     let path: String?
+    let `extension`: String?
     
-    init(path: String){
+    init(path: String, extension: String){
         self.path = path
+        self.`extension` = `extension`
     }
 }
