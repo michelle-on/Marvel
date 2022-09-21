@@ -19,7 +19,6 @@ class HomeViewCode: UIView {
         
         configHierarchy()
          configConstraints()
-         print("config homeview on")
     }
     
     required init?(coder: NSCoder) {

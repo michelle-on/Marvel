@@ -59,12 +59,11 @@ class ViewController: UIViewController {
             return
         }
         
-        //Passando parametros
         guard var component = URLComponents(url: marvelUrl, resolvingAgainstBaseURL: false) else {return}
         component.queryItems = queryList
         
         guard let componentUrl = component.url else {
-            print("url component nao encontrada")
+            print("component nao encontrada")
             return
             
         }
@@ -76,9 +75,6 @@ class ViewController: UIViewController {
                 
             }
             do {
-                print(componentUrl)
-                print(data.description)
-                print(response?.description ?? 0)
                 let results = try JSONDecoder().decode(Results.self, from: data)
                 
                 self.charactersList = results.data.results
@@ -86,7 +82,6 @@ class ViewController: UIViewController {
                 DispatchQueue.main.async {
                     self.homeView.tableViewView.reloadData()
                 }
-                print(self.charactersList)
                 
             } catch {
                 print(String(describing: erro))
@@ -101,12 +96,11 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        //mesmo id que se utilizar quando vai linkar a celula a TableView
+
         guard let cellCharacter = tableView.dequeueReusableCell(withIdentifier: "CharactersCell") as? CharactersCellViewCode else {
             fatalError("Erro ao contruir CharactesCell")
         }
         
-        //chamar funcao da celula
         cellCharacter.configcell(charactersList[indexPath.row])
         return cellCharacter
     }
@@ -119,13 +113,8 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
             return
         }
         
+        detailsController.detailView.configDetails(charactersList[indexPath.row])
         navigation.pushViewController(detailsController, animated: true)
-    }
-    
-    func presentNavigationController() {
-        let navigation = UINavigationController(rootViewController: self)
-        
-        
     }
 }
 
