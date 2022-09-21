@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-struct Character: Identifiable, Codable {
+struct Character: Codable {
     let id: Int?
     let name: String?
     let thumbnail: Thumbnail?
