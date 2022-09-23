@@ -39,7 +39,7 @@ class CharactersCellViewCode: UITableViewCell {
         self.characterImage.translatesAutoresizingMaskIntoConstraints = false
         self.nameLabel.translatesAutoresizingMaskIntoConstraints = false
         
-        self.nameLabel.font = UIFont.boldSystemFont(ofSize: 18)
+        self.nameLabel.font = UIFont.boldSystemFont(ofSize: 20)
         self.nameLabel.textColor = UIColor.black
     }
     
@@ -47,15 +47,15 @@ class CharactersCellViewCode: UITableViewCell {
         
         NSLayoutConstraint.activate([
             
-            self.backgroundViewCell.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: 10),
+            self.backgroundViewCell.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: 5),
             self.backgroundViewCell.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor),
             self.backgroundViewCell.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor),
             self.backgroundViewCell.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor, constant: -5),
             
             self.characterImage.topAnchor.constraint(equalTo: self.backgroundViewCell.topAnchor, constant: -5),
-            self.characterImage.heightAnchor.constraint(equalToConstant: 100),
-            self.characterImage.widthAnchor.constraint(equalToConstant: 100),
-            self.characterImage.leadingAnchor.constraint(equalTo: self.backgroundViewCell.leadingAnchor),
+            self.characterImage.heightAnchor.constraint(equalToConstant: 150),
+            self.characterImage.widthAnchor.constraint(equalToConstant: 150),
+            self.characterImage.leadingAnchor.constraint(equalTo: self.backgroundViewCell.leadingAnchor, constant: 5),
             self.characterImage.bottomAnchor.constraint(equalTo: self.backgroundViewCell.bottomAnchor),
             
             self.nameLabel.topAnchor.constraint(equalTo: self.characterImage.topAnchor),
