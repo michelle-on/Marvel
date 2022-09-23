@@ -20,7 +20,7 @@ class ViewController: UIViewController {
     let pubKey = "20b9106e8d9c68c1e46b933c23147ff8"
     
     var charactersList: Array<Character> = []
-    
+
     lazy var queryList = [URLQueryItem(name: "ts", value: timestamp), URLQueryItem(name: "apikey", value: pubKey), URLQueryItem(name: "hash", value: hashMD5)]
 
     
@@ -54,26 +54,19 @@ class ViewController: UIViewController {
     }
     
     func getCharacters() -> Void {
-        guard let marvelUrl = url else {
-            print("Url não encontrada")
-            return
-        }
+        guard let marvelUrl = url else {return}
         
         guard var component = URLComponents(url: marvelUrl, resolvingAgainstBaseURL: false) else {return}
         component.queryItems = queryList
         
-        guard let componentUrl = component.url else {
-            print("component nao encontrada")
-            return
-            
-        }
+        guard let componentUrl = component.url else {return}
         
         URLSession.shared.dataTask(with: componentUrl) {(data, response, erro) in
             guard let data = data else {
                 print("data nao encontrada")
                 return
-                
             }
+            
             do {
                 let results = try JSONDecoder().decode(Results.self, from: data)
                 
