@@ -26,21 +26,48 @@ class CharactersCellViewCode: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    @objc func favorite() {
+        guard let character = char else {return}
+        let favorite = Favorites()
+        var charactersList = favorite.getListFavorite()
+        /*
+         Adicionar ou remove personagens na lista de favoritos
+         1 - Caso o personagem existe na listagem -> favorite.remove
+         2 - Caso o personagem não exista na listagem -> favorite.add
+         */
+        print(charactersList)
+        if charactersList.contains(where: { element in
+            return character.id == element.id
+        }) {
+            favorite.remove(character)
+        } else {
+            favorite.add(character)
+        }
+        
+        charactersList = favorite.getListFavorite()
+        print(charactersList)
+    }
+    
     func configHierarchy() {
         self.contentView.addSubview(backgroundViewCell)
         
         self.backgroundViewCell.addSubview(characterImage)
         self.backgroundViewCell.addSubview(nameLabel)
+        self.backgroundViewCell.addSubview(favoriteButton)
         
         self.backgroundViewCell.backgroundColor = UIColor.white
         self.characterImage.backgroundColor = UIColor.green
+        self.favoriteButton.setImage(UIImage(named: "favorite-on"), for: .normal)
         
         self.backgroundViewCell.translatesAutoresizingMaskIntoConstraints = false
         self.characterImage.translatesAutoresizingMaskIntoConstraints = false
         self.nameLabel.translatesAutoresizingMaskIntoConstraints = false
+        self.favoriteButton.translatesAutoresizingMaskIntoConstraints = false
         
         self.nameLabel.font = UIFont.boldSystemFont(ofSize: 20)
         self.nameLabel.textColor = UIColor.black
+        
+        favoriteButton.addTarget(self, action: #selector(self.favorite) , for: .touchUpInside)
     }
     
     func configConstraints() {
@@ -60,7 +87,12 @@ class CharactersCellViewCode: UITableViewCell {
             
             self.nameLabel.topAnchor.constraint(equalTo: self.characterImage.topAnchor),
             self.nameLabel.leadingAnchor.constraint(equalTo: self.characterImage.trailingAnchor, constant: 5),
-            self.nameLabel.trailingAnchor.constraint(equalTo: self.backgroundViewCell.trailingAnchor)
+            self.nameLabel.trailingAnchor.constraint(equalTo: self.favoriteButton.leadingAnchor),
+            
+            self.favoriteButton.topAnchor.constraint(equalTo: self.backgroundViewCell.topAnchor),
+            self.favoriteButton.heightAnchor.constraint(equalToConstant: 30),
+            self.favoriteButton.widthAnchor.constraint(equalToConstant: 30),
+            self.favoriteButton.trailingAnchor.constraint(equalTo: self.backgroundViewCell.trailingAnchor, constant: -10)
         ])
     }
     
@@ -72,6 +104,8 @@ class CharactersCellViewCode: UITableViewCell {
         path += ".\(`extension`)"
         guard let urlPath = URL(string: path) else {return}
         
+        
+        char = character
         getImageCharacter(urlPath)
     }
     
