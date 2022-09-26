@@ -11,6 +11,7 @@ class ViewController: UIViewController {
     
     //MARK: - Atributos
     let homeView = HomeViewCode()
+    let favButton = UIBarButtonItem(image: UIImage(named: "favorite-on"), style: .done, target: ViewController.self, action: #selector(favoritesCharacters))
     
     let url = URL(string: "https://gateway.marvel.com/v1/public/characters")
     
@@ -22,7 +23,6 @@ class ViewController: UIViewController {
     var charactersList: Array<Character> = []
 
     lazy var queryList = [URLQueryItem(name: "ts", value: timestamp), URLQueryItem(name: "apikey", value: pubKey), URLQueryItem(name: "hash", value: hashMD5)]
-
     
     //MARK: - Funções
 
@@ -30,9 +30,14 @@ class ViewController: UIViewController {
         super.viewDidLoad()
 
         self.view.addSubview(homeView)
+        self.navigationItem.rightBarButtonItem = favButton
         configTableViewCode()
         configConstraints()
         getCharacters()
+    }
+    
+    @objc func favoritesCharacters() {
+        
     }
     
     func configConstraints() {
