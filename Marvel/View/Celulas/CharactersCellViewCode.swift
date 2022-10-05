@@ -14,6 +14,9 @@ class CharactersCellViewCode: UITableViewCell {
     let backgroundViewCell = UIView()
     var characterImage = UIImageView()
     let nameLabel = UILabel()
+    let favoriteButton = UIButton()
+    
+    var char: Character?
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -30,11 +33,7 @@ class CharactersCellViewCode: UITableViewCell {
         guard let character = char else {return}
         let favorite = Favorites()
         var charactersList = favorite.getListFavorite()
-        /*
-         Adicionar ou remove personagens na lista de favoritos
-         1 - Caso o personagem existe na listagem -> favorite.remove
-         2 - Caso o personagem não exista na listagem -> favorite.add
-         */
+     
         print(charactersList)
         if charactersList.contains(where: { element in
             return character.id == element.id
@@ -103,7 +102,6 @@ class CharactersCellViewCode: UITableViewCell {
         guard var path = character.thumbnail?.path else {return}
         path += ".\(`extension`)"
         guard let urlPath = URL(string: path) else {return}
-        
         
         char = character
         getImageCharacter(urlPath)
