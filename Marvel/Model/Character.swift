@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import UIKit
 
 struct Character: Codable {
     let id: Int?
@@ -14,7 +13,7 @@ struct Character: Codable {
     let thumbnail: Thumbnail?
     let description: String?
     
-    init(id: Int, name: String, thumbnail: Thumbnail, description: String) {
+    init(id: Int, name: String, thumbnail: Thumbnail?, description: String) {
         self.id = id
         self.name = name
         self.thumbnail = thumbnail
