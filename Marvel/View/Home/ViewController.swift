@@ -11,9 +11,8 @@ class ViewController: UIViewController {
     
     //MARK: - Atributos
     let homeView = HomeViewCode()
-    let favButton = UIBarButtonItem(image: UIImage(named: "favorite-on"), style: .done, target: ViewController.self, action: #selector(favoritesCharacters))
-    
     let url = URL(string: "https://gateway.marvel.com/v1/public/characters")
+    var network: Network = Implementation()
     
     let timestamp = "0"
     let hashMD5 = "c0fcc0d4e856be344378b728d1e11907"
@@ -22,22 +21,32 @@ class ViewController: UIViewController {
     
     var charactersList: Array<Character> = []
 
+    lazy var favButton = UIBarButtonItem(image: UIImage(named: "Image"), style: .done, target: ViewController.self, action: #selector(self.favoritesCharacters))
+    
     lazy var queryList = [URLQueryItem(name: "ts", value: timestamp), URLQueryItem(name: "apikey", value: pubKey), URLQueryItem(name: "hash", value: hashMD5)]
     
     //MARK: - Funções
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         self.view.addSubview(homeView)
-        self.navigationItem.rightBarButtonItem = favButton
+        self.navigationItem.leftBarButtonItem = favButton
         configTableViewCode()
         configConstraints()
         getCharacters()
     }
     
     @objc func favoritesCharacters() {
+        let favoritesController = FavoritesController()
         
+        guard let navigation = self.navigationController else {
+            print("não foi possivel encontrar o navigation")
+            return
+        }
+        
+        favoritesController.viewDidLoad()
+        navigation.pushViewController(favoritesController, animated: true)
     }
     
     func configConstraints() {
@@ -66,25 +75,25 @@ class ViewController: UIViewController {
         
         guard let componentUrl = component.url else {return}
         
-        URLSession.shared.dataTask(with: componentUrl) {(data, response, erro) in
-            guard let data = data else {
-                print("data nao encontrada")
-                return
-            }
-            
-            do {
-                let results = try JSONDecoder().decode(Results.self, from: data)
-                
-                self.charactersList = results.data.results
-                
-                DispatchQueue.main.async {
-                    self.homeView.tableViewView.reloadData()
+        network.dataTask(with: componentUrl, callback: { (data, response, erro) in
+                guard let data = data else {
+                    print("data nao encontrada")
+                    return
                 }
                 
-            } catch {
-                print(String(describing: erro))
-            }
-        }.resume()
+                do {
+                    let results = try JSONDecoder().decode(Results.self, from: data)
+                    
+                    self.charactersList = results.data.results
+                    
+                    DispatchQueue.main.async {
+                        self.homeView.tableViewView.reloadData()
+                    }
+                    
+                } catch {
+                    print(String(describing: erro))
+                }
+        })
     }
 }
 
@@ -113,6 +122,21 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
         
         detailsController.detailView.configDetails(charactersList[indexPath.row])
         navigation.pushViewController(detailsController, animated: true)
+    }
+}
+
+protocol Network {
+    func dataTask(with url: URL, callback: @escaping (Data?, URLResponse?, Error?) -> Void)
+}
+
+class Implementation: Network {
+    func dataTask(with url: URL, callback: @escaping (Data?, URLResponse?, Error?) -> Void) {
+        let task = URLSession.shared.dataTask(with: url) {(data, response, erro) in
+            
+            callback(data, response, erro)
+
+        }
+        task.resume()
     }
 }
 
