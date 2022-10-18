@@ -70,7 +70,6 @@ class CharacterCellTest: XCTestCase {
         
         //then
         XCTAssertNotEqual(favList, favActualList)
-
     }
     
     func testButtonRemoveFavorite() {
