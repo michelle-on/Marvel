@@ -6,9 +6,11 @@
 //
 
 import Foundation
+import UIKit
 
 class Favorites {
     private var characters: Set<String>
+
     let defaults = UserDefaults.standard
 
     init(){
@@ -27,7 +29,6 @@ class Favorites {
     func getCharactersIds() -> Set<String> {
         return self.characters
     }
-
 
     func add(_ character: Character) {
         var characterList = getListFavorite()
@@ -62,8 +63,36 @@ class Favorites {
         guard let characterListData = defaults.value(forKey: "Favorites") as? Data else { return [] }
         
         guard let characterList = try? JSONDecoder().decode([Character].self, from: characterListData)
-        else {return []}
+        else { return [] }
         
         return characterList
+    }
+    
+    func isFavorite(_ character: Character) -> Bool {
+        let characterList = getListFavorite()
+        
+        if characterList.contains(where: { element in
+            return character.id == element.id
+        }) {
+            return true
+        } else {
+            return false
+        }
+    }
+}
+
+protocol UserDefaultAdapter {
+func data(forKey keyName: String) -> Data
+}
+
+class Default : UserDefaultAdapter {
+    func data(forKey keyName: String) -> Data {
+        let defaults = UserDefaults.standard
+
+        defaults.data(forKey: keyName) {
+            
+        }
+        
+        
     }
 }
