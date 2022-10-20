@@ -20,8 +20,8 @@ class ViewController: UIViewController {
     let pubKey = "20b9106e8d9c68c1e46b933c23147ff8"
     
     var charactersList: Array<Character> = []
-
-    lazy var favButton = UIBarButtonItem(image: UIImage(named: "Image"), style: .done, target: ViewController.self, action: #selector(self.favoritesCharacters))
+    
+    lazy var favButton = UIBarButtonItem(image: UIImage(named: "Image"), style: .done, target: self, action: #selector(self.favoritesCharacters))
     
     lazy var queryList = [URLQueryItem(name: "ts", value: timestamp), URLQueryItem(name: "apikey", value: pubKey), URLQueryItem(name: "hash", value: hashMD5)]
     
