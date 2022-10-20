@@ -16,7 +16,9 @@ class CharactersCellViewCode: UITableViewCell {
     let nameLabel = UILabel()
     let favoriteButton = UIButton()
     
+    var favorites = Favorites()
     var char: Character?
+    var charactersList: [Character] = []
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -31,22 +33,22 @@ class CharactersCellViewCode: UITableViewCell {
     
     @objc func favorite() {
         guard let character = char else {return}
-        let favorite = Favorites()
-        var charactersList = favorite.getListFavorite()
-     
-        print(charactersList)
-        if charactersList.contains(where: { element in
-            return character.id == element.id
-        }) {
-            favorite.remove(character)
-        } else {
-            favorite.add(character)
-        }
+        charactersList = favorites.getListFavorite()
         
-        charactersList = favorite.getListFavorite()
         print(charactersList)
-    }
-    
+        if favorites.isFavorite(character) == true {
+            favorites.remove(character)
+            self.favoriteButton.setImage(UIImage(named: "favorite"), for: .normal)
+
+        } else {
+            favorites.add(character)
+            self.favoriteButton.setImage(UIImage(named: "favorite-on"), for: .normal)
+        }   
+        
+        charactersList = favorites.getListFavorite()
+        print(charactersList)
+}
+
     func configHierarchy() {
         self.contentView.addSubview(backgroundViewCell)
         
@@ -56,7 +58,8 @@ class CharactersCellViewCode: UITableViewCell {
         
         self.backgroundViewCell.backgroundColor = UIColor.white
         self.characterImage.backgroundColor = UIColor.green
-        self.favoriteButton.setImage(UIImage(named: "favorite-on"), for: .normal)
+        
+        self.favoriteButton.setImage(UIImage(named: "favorite"), for: .normal)
         
         self.backgroundViewCell.translatesAutoresizingMaskIntoConstraints = false
         self.characterImage.translatesAutoresizingMaskIntoConstraints = false
