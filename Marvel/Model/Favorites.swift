@@ -82,17 +82,17 @@ class Favorites {
 }
 
 protocol UserDefaultAdapter {
-func data(forKey keyName: String) -> Data
+func data(forKey keyName: String) -> Data?
 }
 
 class Default : UserDefaultAdapter {
-    func data(forKey keyName: String) -> Data {
+    func data(forKey keyName: String) -> Data? {
         let defaults = UserDefaults.standard
 
-        defaults.data(forKey: keyName) {
-            
+        guard let defaultData = defaults.data(forKey: keyName) else {
+            return nil
         }
         
-        
+        return defaultData
     }
 }
