@@ -8,9 +8,11 @@
 import Foundation
 import UIKit
 
-class CharactersCellViewCode: UITableViewCell {
+final class CharactersCellViewCode: UITableViewCell {
     
     //MARK: - Atributos
+    var network: Network = Implementation()
+    
     let backgroundViewCell = UIView()
     var characterImage = UIImageView()
     let nameLabel = UILabel()
@@ -19,6 +21,9 @@ class CharactersCellViewCode: UITableViewCell {
     var favorites = Favorites()
     var char: Character?
     var charactersList: [Character] = []
+    
+    var `extension`: String = ""
+    var path: String = ""
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -43,7 +48,7 @@ class CharactersCellViewCode: UITableViewCell {
         } else {
             favorites.add(character)
             self.favoriteButton.setImage(UIImage(named: "favorite-on"), for: .normal)
-        }   
+        }
         
         charactersList = favorites.getListFavorite()
         print(charactersList)
@@ -101,8 +106,8 @@ class CharactersCellViewCode: UITableViewCell {
     func configcell (_ character: Character) {
         nameLabel.text = character.name
         
-        guard let `extension` = character.thumbnail?.extension else {return}
-        guard var path = character.thumbnail?.path else {return}
+        `extension` = character.thumbnail?.extension ?? ""
+        path = character.thumbnail?.path ?? ""
         path += ".\(`extension`)"
         guard let urlPath = URL(string: path) else {return}
         
@@ -111,7 +116,7 @@ class CharactersCellViewCode: UITableViewCell {
     }
     
     func getImageCharacter(_ path: URL) {
-        URLSession.shared.dataTask(with: path ) { data, response, erro in
+        network.dataTask(with: path, callback: { (data, response, erro) in
             guard
                 let data = data else {return}
             
@@ -124,9 +129,8 @@ class CharactersCellViewCode: UITableViewCell {
             } catch {
                 print("Erro\(String(describing: erro))")
             }
-
-        }.resume()
-    }
+          })
+        }
     
     private func getDocumentsDirectory() -> URL {
         let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)

@@ -14,10 +14,58 @@
             filePath = "MarvelTests/FavoritesTest.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "25"
-            endingLineNumber = "25"
+            startingLineNumber = "37"
+            endingLineNumber = "37"
             landmarkName = "testCharactersDataIsMatching()"
             landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "32C0E143-CB48-4F1D-A92F-CB0CFBA4D027 - c652f17a5e0b9235"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "MarvelTests.FavoritesTest.testCharactersDataIsMatching() -&gt; ()"
+                  moduleName = "MarvelTests"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/michelle.onasanya/Desktop/Marvel/MarvelTests/FavoritesTest.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "31"
+                  endingLineNumber = "31"
+                  offsetFromSymbolStart = "72">
+               </Location>
+               <Location
+                  uuid = "32C0E143-CB48-4F1D-A92F-CB0CFBA4D027 - c652f17a5e0b91a1"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "MarvelTests.FavoritesTest.testCharactersDataIsMatching() -&gt; ()"
+                  moduleName = "MarvelTests"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/michelle.onasanya/Desktop/Marvel/MarvelTests/FavoritesTest.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "43"
+                  endingLineNumber = "43"
+                  offsetFromSymbolStart = "72">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "F1B45842-9182-4398-AC80-5025629B6E0D"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Marvel/View/Celulas/CharactersCellViewCode.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "11"
+            endingLineNumber = "11"
+            landmarkName = "CharactersCellViewCode"
+            landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

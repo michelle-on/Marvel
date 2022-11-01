@@ -19,9 +19,9 @@ class FavoritesController: UIViewController {
         super.viewDidLoad()
         
         self.view.addSubview(homeView)
-        characterFavoriteList = favorites.getListFavorite()
         configTableViewCode()
         configConstraints()
+        characterFavoriteList = favorites.getListFavorite()
     }
     
     func configConstraints() {

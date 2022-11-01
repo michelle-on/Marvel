@@ -10,40 +10,40 @@ import UIKit
 
 class Favorites {
     private var characters: Set<String>
-
+    
     let defaults = UserDefaults.standard
-
+    
     init(){
         let decoder = PropertyListDecoder()
-
+        
         if let data = defaults.data(forKey: "Favorites") {
             let charactersData = try? decoder.decode(Set<String>.self, from: data)
             self.characters = charactersData ?? []
             return
-
+            
         } else {
             self.characters = []
         }
     }
-
+    
     func getCharactersIds() -> Set<String> {
         return self.characters
     }
-
+    
     func add(_ character: Character) {
         var characterList = getListFavorite()
         
         guard !characterList.contains(where: { element in
             return character.id == element.id
         }) else {return}
-                
+        
         characterList.append(character)
         
         guard let characterListData = try? JSONEncoder().encode(characterList) else {return}
-                
+        
         defaults.set(characterListData, forKey: "Favorites")
     }
-
+    
     func remove(_ character: Character) {
         var characterList = getListFavorite()
         
@@ -55,7 +55,7 @@ class Favorites {
         characterList.remove(at: index)
         
         guard let characterListData = try? JSONEncoder().encode(characterList) else {return}
-                
+        
         defaults.set(characterListData, forKey: "Favorites")
     }
     
@@ -82,13 +82,13 @@ class Favorites {
 }
 
 protocol UserDefaultAdapter {
-func data(forKey keyName: String) -> Data?
+    func data(forKey keyName: String) -> Data?
 }
 
 class Default : UserDefaultAdapter {
     func data(forKey keyName: String) -> Data? {
         let defaults = UserDefaults.standard
-
+        
         guard let defaultData = defaults.data(forKey: keyName) else {
             return nil
         }
