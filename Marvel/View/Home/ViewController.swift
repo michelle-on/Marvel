@@ -86,8 +86,12 @@ class ViewController: UIViewController {
                     
                     self.charactersList = results.data.results
                     
-                    DispatchQueue.main.async {
+                    if Thread.isMainThread {
                         self.homeView.tableViewView.reloadData()
+                    } else {
+                        DispatchQueue.main.async {
+                            self.homeView.tableViewView.reloadData()
+                        }
                     }
                     
                 } catch {
