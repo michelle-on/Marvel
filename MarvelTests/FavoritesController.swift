@@ -1,14 +1,15 @@
 //
-//  FavoritesTest.swift
+//  FavoritesController.swift
 //  MarvelTests
 //
-//  Created by Michelle Onasanya on 07/10/22.
+//  Created by Michelle Onasanya on 20/10/22.
 //
 
 import XCTest
 @testable import Marvel
 
-class FavoritesTest: XCTestCase {
+
+class FavoritesController: XCTestCase {
 
     override func setUpWithError() throws {
         // Put setup code here. This method is called before the invocation of each test method in the class.
@@ -18,16 +19,5 @@ class FavoritesTest: XCTestCase {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
     }
     
-    func testCharactersDataIsMatching() {
-        //given
-        let favorites = Favorites()
-        
-        //when
-        
-        
-        //then
-        
-        
-    }
-
+    
 }

@@ -9,16 +9,16 @@ import XCTest
 @testable import Marvel
 
 
-class CharacterCellTest: XCTestCase {
-
+final class CharacterCellTest: XCTestCase {
+    
     override func setUpWithError() throws {
         // Put setup code here. This method is called before the invocation of each test method in the class.
     }
-
+    
     override func tearDownWithError() throws {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
     }
-
+    
     func testCharacterCellConfigHierarchy() {
         let charactersCell = CharactersCellViewCode()
         
@@ -28,78 +28,119 @@ class CharacterCellTest: XCTestCase {
         XCTAssertNotNil(charactersCell.backgroundViewCell.subviews)
     }
     
-    func testCharacterFavListIsMatchingWhitFavList() {
+    func testFavListNotChangeWithoutCharacters() {
         //given
         let charactersCell = CharactersCellViewCode()
-
+        
         //when
         charactersCell.favorite()
         
         //then
-        XCTAssertEqual(charactersCell.charactersList, charactersCell.favorites.getListFavorite())
+        XCTAssertNil(charactersCell.char)
+    }
+    
+    func testCharacterFavListIsMatchingWhitFavList() {
+        //given
+        let charactersCell = CharactersCellViewCode()
+        charactersCell.char = Character(id: 01, name: "Tony", thumbnail: nil, description: "")
+        
+        //when
+        charactersCell.favorite()
+        let listCharacters = charactersCell.charactersList
+        let listCharactersFav = charactersCell.favorites.getListFavorite()
+        
+        //then
+        XCTAssertEqual(listCharacters, listCharactersFav)
     }
     
     func testCharacterFavListUpdated() {
         //given
         let charactersCell = CharactersCellViewCode()
-        let favorites = Favorites()
         let lastFavList = charactersCell.favorites.getListFavorite()
-        guard let character = charactersCell.char else {return}
-
+        charactersCell.char = Character(id: 01, name: "Tony", thumbnail: nil, description: "")
+        
         //when
         charactersCell.favorite()
-        favorites.add(character)
         let favList = charactersCell.favorites.getListFavorite()
-
+        
         //then
         XCTAssertNotEqual(favList, lastFavList)
     }
     
-    func testButtonAddFavorite() {
+    func testButtonAddCharacterToFavoriteList() {
         //given
         let charactersCell = CharactersCellViewCode()
         let favButton = charactersCell.favoriteButton
         let favList = charactersCell.favorites.getListFavorite()
-        guard let character = charactersCell.char else {return}
-
+        charactersCell.char = Character(id: 01, name: "Tony", thumbnail: nil, description: "")
+        
         //when
         favButton.sendActions(for: .touchUpInside)
-        charactersCell.favorites.add(character)
-
         let favActualList = charactersCell.favorites.getListFavorite()
         
         //then
-        XCTAssertNotEqual(favList, favActualList)
+        XCTAssertNotEqual(favActualList, favList)
+        //        XCTAssertEqual(favActualList.last, charactersCell.char)
+        //mock????? Esta passando pela verificacao se ja existe na lista, o teste vai falhar.
     }
     
-    func testButtonRemoveFavorite() {
+    func testButtonRemoveCharactersFromFavorite() {
         //given
         let charactersCell = CharactersCellViewCode()
         let favButton = charactersCell.favoriteButton
         let favList = charactersCell.favorites.getListFavorite()
-        guard let character = charactersCell.char else {return}
-
+        charactersCell.char = Character(id: 01, name: "Tony", thumbnail: nil, description: "")
+        
         //when
         favButton.sendActions(for: .touchUpInside)
-        charactersCell.favorites.remove(character)
-
+        
         let favActualList = charactersCell.favorites.getListFavorite()
         
         //then
         XCTAssertNotEqual(favList, favActualList)
+        //        XCTAssertNotEqual(favActualList.last, charactersCell.char)
+        //CONTROLE DO ESTADO
+        //mock????? Esta passando pela verificacao se ja existe na lista, o teste vai falhar.
     }
     
     func testConfigNameCharacter() {
         //given
         let charactersCell = CharactersCellViewCode()
-        guard let character = charactersCell.char else {return}
-
+        let character = Character(id: 0001, name: "Tony", thumbnail: nil, description: "")
+        
         //when
         charactersCell.configcell(character)
         
         //then
         XCTAssertEqual(charactersCell.nameLabel.text, character.name)
     }
+    
+    func testConfigThumbnailCharacters() {
+        //given
+        let charactersCell = CharactersCellViewCode()
+        let thumbnail = Thumbnail(path: "marve/tony/0001", extension: ".jpg")
+        let character = Character(id: 0001, name: "Tony", thumbnail: thumbnail, description: "")
+        
+        //when
+        charactersCell.configcell(character)
+        
+        //then
+        XCTAssertEqual(character.thumbnail?.extension, thumbnail.extension)
+        XCTAssertEqual(character.thumbnail?.path, thumbnail.path)
+    }
+    
+    func testeUrlPathIsMathing() {
+        //given
+        let charactersCell = CharactersCellViewCode()
+        let thumbnail = Thumbnail(path: "marve/tony/0001", extension: ".jpg")
+        let character = Character(id: 0001, name: "Tony", thumbnail: thumbnail, description: "")
+        
+        guard let urlPath = URL(string: charactersCell.path) else {return}
+        
+        //when
+        charactersCell.getImageCharacter(urlPath)
+        
+        //then
+        XCTAssertEqual(urlPath.description, "\(character.thumbnail?.path).\(character.thumbnail?.extension)")
+    }
 }
-
-
